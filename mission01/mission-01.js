@@ -7,17 +7,6 @@ function getValueAtObject(obj, key) {
   return;
 }
 
-// const person = {
-//   name: "Alice",
-//   age: 25,
-//   city: "Wonderland",
-// };
-
-// console.log(getValueAtObject(person, "name")); // 'Alice'
-// console.log(getValueAtObject(person, "age")); // 25
-// console.log(getValueAtObject(person, "city")); // 'Wonderland'
-// console.log(getValueAtObject(person, "country")); // Error !
-
 function getNumberAtArray(arr, index) {
   // 배열이 아닐 경우 (Array.isArray() 활용)
   if (!Array.isArray(arr)) {
@@ -32,6 +21,17 @@ function getNumberAtArray(arr, index) {
   console.error("Error!");
   return;
 }
+
+// const person = {
+//   name: "Alice",
+//   age: 25,
+//   city: "Wonderland",
+// };
+
+// console.log(getValueAtObject(person, "name")); // 'Alice'
+// console.log(getValueAtObject(person, "age")); // 25
+// console.log(getValueAtObject(person, "city")); // 'Wonderland'
+// console.log(getValueAtObject(person, "country")); // Error !
 
 // const numbers = [10, 20, 30, 40, 50];
 
