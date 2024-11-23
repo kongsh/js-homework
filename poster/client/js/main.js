@@ -57,15 +57,17 @@ function handleNavImageClick(e) {
   const targetList = e.target.closest("li");
   const index = +targetList.dataset.index - 1;
 
-  if (typeof targetList.dataset.index !== "undefined" && index >= 0 && index < data.length) {
+  if (typeof targetList.dataset.index !== "undefined" && index >= 0) {
     try {
-      const { color, name, alt } = data[index];
+      if (index < data.length) {
+        const { color, name, alt } = data[index];
 
-      setBgColor(document.body, color);
-      setImage(visualImg, name, alt);
-      setNameText(nickName, name);
+        setBgColor(document.body, color);
+        setImage(visualImg, name, alt);
+        setNameText(nickName, name);
 
-      playAudio(`./assets/audio/${name.toLowerCase()}.m4a`);
+        playAudio(`./assets/audio/${name.toLowerCase()}.m4a`);
+      } else throw new Error("index값이 데이터의 크기를 벗어났습니다.");
     } catch (err) {
       console.log("handleNavImageClick 함수에서 서버와 통신 실패", err);
       alert("서버와 통신에 실패했습니다...😥");
