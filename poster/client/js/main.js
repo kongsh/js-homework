@@ -16,18 +16,6 @@ function getNode(node) {
   return node;
 }
 
-function toggleListClass(ul, target, className) {
-  if (typeof ul === "string") ul = getNode(ul);
-  if (typeof target === "string") target = getNode(target);
-  if (typeof className !== "string") throw new TypeError("toggleListClass 함수의 인자 className은 문자열이어야 합니다.");
-
-  ul.forEach((li) => {
-    li.classList.remove(className);
-  });
-
-  target.classList.add(className);
-}
-
 function setBgColor(elem, [colorA, colorB = "#000"]) {
   if (typeof elem === "string") elem = getNode(elem);
   if (typeof colorA !== "string") throw new TypeError("setBgColor 함수의 인자 colorA는 문자열이어야 합니다.");
@@ -85,7 +73,11 @@ function handleNavImageClick(e) {
     }
   }
 
-  toggleListClass(this.querySelectorAll("ul > li"), targetList, "is-active");
+  this.querySelectorAll("ul > li").forEach((li) => {
+    li.classList.remove("is-active");
+  });
+
+  targetList.classList.add("is-active");
 }
 
 const nav = getNode(".nav");
