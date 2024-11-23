@@ -36,10 +36,10 @@ function setBgColor(elem, [colorA, colorB = "#000"]) {
   elem.style.background = `linear-gradient(to bottom, ${colorA},${colorB})`;
 }
 
-function setImage(target, { name, alt }) {
+function setImage(target, name, alt) {
   if (typeof target === "string") target = getNode(target);
-  if (typeof name !== "string") throw new TypeError("setImage 함수의 인자 name은 문자열이어야 합니다.");
-  if (typeof alt !== "string") throw new TypeError("setImage 함수의 인자 alt는 문자열이어야 합니다.");
+  if (typeof name !== "string") throw new TypeError("setImage 함수의 두번째 인자는 문자열이어야 합니다.");
+  if (typeof alt !== "string") throw new TypeError("setImage 함수의 세번째 인자는 문자열이어야 합니다.");
 
   target.src = `./assets/${name.toLowerCase()}.jpeg`;
   target.alt = alt;
@@ -66,17 +66,26 @@ function playAudio(source) {
 
 function handleNavImageClick(e) {
   if (!(e.target.tagName === "IMG")) return;
-
   const targetList = e.target.closest("li");
-  const targetData = data[+targetList.dataset.index - 1];
+  const index = +targetList.dataset.index - 1;
+
+  if (typeof targetList.dataset.index !== "undefined" && index >= 0 && index < data.length) {
+    try {
+      const { color, name, alt } = data[index];
+
+      setBgColor(document.body, color);
+      setImage(visualImg, name, alt);
+      setNameText(nickName, name);
+
+      playAudio(`./assets/audio/${name.toLowerCase()}.m4a`);
+    } catch (err) {
+      console.log("handleNavImageClick 함수에서 서버와 통신 실패");
+      alert("서버와 통신에 실패했습니다...😥");
+      throw new Error("handleNavImageClick 함수에서 서버와 통신에 실패했습니다.");
+    }
+  }
 
   toggleListClass(this.querySelectorAll("ul > li"), targetList, "is-active");
-
-  setBgColor(document.body, targetData.color);
-  setImage(visualImg, targetData);
-  setNameText(nickName, targetData.name);
-
-  playAudio(`./assets/audio/${targetData.name.toLowerCase()}.m4a`);
 }
 
 const nav = getNode(".nav");
