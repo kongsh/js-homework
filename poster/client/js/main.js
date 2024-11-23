@@ -26,8 +26,8 @@ function setBgColor(elem, [colorA, colorB = "#000"]) {
 
 function setImage(target, name, alt) {
   if (typeof target === "string") target = getNode(target);
-  if (typeof name !== "string") throw new TypeError("setImage 함수의 두번째 인자는 문자열이어야 합니다.");
-  if (typeof alt !== "string") throw new TypeError("setImage 함수의 세번째 인자는 문자열이어야 합니다.");
+  if (typeof name !== "string") throw new TypeError("setImage 함수의 두번째 인수는 문자열이어야 합니다.");
+  if (typeof alt !== "string") throw new TypeError("setImage 함수의 세번째 인수는 문자열이어야 합니다.");
 
   target.src = `./assets/${name.toLowerCase()}.jpeg`;
   target.alt = alt;
@@ -35,7 +35,7 @@ function setImage(target, name, alt) {
 
 function setNameText(target, nameText) {
   if (typeof target === "string") target = getNode(target);
-  if (typeof nameText !== "string") throw new TypeError("setNameText 함수의 두번째 인자는 문자열이어야 합니다.");
+  if (typeof nameText !== "string") throw new TypeError("setNameText 함수의 두번째 인수는 문자열이어야 합니다.");
 
   target.textContent = nameText;
 }
@@ -50,6 +50,15 @@ function playAudio(source) {
   }
 
   audioPlayer.play();
+}
+
+function reportFunctionError(functionName, err) {
+  if (typeof functionName !== "string") throw new Error("reportFunctionError함수의 첫번째 인수는 문자열이어야 합니다.");
+  if (!(err instanceof Error)) throw new Error("reportFunctionError의 두번째 인수는 Error이어야 합니다.");
+
+  console.log(`${functionName} 함수에서 서버와 통신 실패`, err);
+  alert("서버와 통신에 실패했습니다...😥");
+  throw new Error(`${functionName} 함수에서 서버와 통신에 실패했습니다.`);
 }
 
 function handleNavImageClick(e) {
@@ -69,9 +78,7 @@ function handleNavImageClick(e) {
         playAudio(`./assets/audio/${name.toLowerCase()}.m4a`);
       } else throw new Error("index값이 데이터의 크기를 벗어났습니다.");
     } catch (err) {
-      console.log("handleNavImageClick 함수에서 서버와 통신 실패", err);
-      alert("서버와 통신에 실패했습니다...😥");
-      throw new Error("handleNavImageClick 함수에서 서버와 통신에 실패했습니다.");
+      reportFunctionError(handleNavImageClick.name, err);
     }
   }
 
