@@ -79,7 +79,7 @@ function handleNavImageClick(e) {
 
       playAudio(`./assets/audio/${name.toLowerCase()}.m4a`);
     } catch (err) {
-      console.log("handleNavImageClick 함수에서 서버와 통신 실패");
+      console.log("handleNavImageClick 함수에서 서버와 통신 실패", err);
       alert("서버와 통신에 실패했습니다...😥");
       throw new Error("handleNavImageClick 함수에서 서버와 통신에 실패했습니다.");
     }
